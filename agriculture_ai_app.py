@@ -76,7 +76,7 @@ def safe_sum(values):
 
 def get_advice(location, past_weather, future_weather, soil, user_query, language):
     prompt = f"""
-You are a smart agriculture advisor helping a farmer in {location}.
+You are a smart agriculture advisor and experienced farmer helping a farmer in {location}.
 Speak in {language}. Respond in a short, simple, farmer-friendly tone.
 
 **Past 10 Days:**
