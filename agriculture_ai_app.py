@@ -54,15 +54,21 @@ def get_future_weather(lat, lon):
     return r.json().get("daily", {})
 
 def get_soil_data(lat, lon):
+    url = (
+        f"https://rest.isric.org/soilgrids/v2.0/properties/query?"
+        f"lon={lon}&lat={lat}&"
+        f"property=phh2o&property=ocd&property=sand&property=silt&property=clay&property=cec&"
+        f"depth=0-5cm&value=mean"
+    )
     try:
-        # Sample static soil data. Replace with actual API call if available.
+        res = requests.get(url).json()
         return {
-            "phh2o": 6.5,
-            "ocd": 25.3,
-            "sand": 45,
-            "silt": 30,
-            "clay": 25,
-            "cec": 18.2
+            "phh2o": res["properties"]["phh2o"]["depths"][0]["values"]["mean"],
+            "ocd": res["properties"]["ocd"]["depths"][0]["values"]["mean"],
+            "sand": res["properties"]["sand"]["depths"][0]["values"]["mean"],
+            "silt": res["properties"]["silt"]["depths"][0]["values"]["mean"],
+            "clay": res["properties"]["clay"]["depths"][0]["values"]["mean"],
+            "cec": res["properties"]["cec"]["depths"][0]["values"]["mean"],
         }
     except:
         return None
